@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <title>Diagnostico</title>
+</head>
+
+<body>
+    <form action="" class="form">
+        <label for="idInmueble">ID Inmueble: </label>
+        <section class="seccion">
+            <input type="number" name="idInmueble" id="idInmueble">
+            <span id="mensaje1" class="mensaje"></span>
+        </section>
+        <label for="direccion">Direccion: </label>
+        <section class="seccion">
+            <input type="text" name="direccion" id="direccion">
+            <span id="mensaje2" class="mensaje"></span>
+        </section>
+        <label for="precio">Precio: </label>
+        <section class="seccion">
+            <input type="number" name="precio" id="precio">
+            <span id="mensaje3" class="mensaje"></span>
+        </section>
+        <label for="telefono">Telefono: </label>
+        <section class="seccion">
+            <input type="number" name="telefono" id="telefono">
+        </section>
+        <label for="estaDisponible">Disponible: </label>
+        <section class="seccion">
+            <input type="number" name="estaDisponible" id="estaDisponible">
+        </section>
+        <Button type="submit">Enviar</Button>
+        <Button id="buscar">Buscar</Button>
+        <Button id="listar">Listar Inmuebles</Button>
+    </form>
+
+    <span class="alert" id="mensaje4"></span>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
