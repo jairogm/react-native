@@ -109,47 +109,46 @@ const telefono = document.getElementById('telefono');
 const disponible = document.getElementById('disponible');
 
 
-var loading = false
-const getInmuebles = new Promise((resolve, reject) => {
-        loading = true
-        loading ? mensaje4.innerHTML = "Cargando..." : null
-        let result = [ ]
-        setTimeout(() => {
-            result = inmueble.filter(item => item.estaDisponible && item.precio >= 200000000 && item.precio <= 300000000)
-            resolve(result)
-        }, 1000);
-    
-    
-    });
-    
+let loading = false
 
+const getInmuebles = new Promise((resolve, reject) => {
+  loading = true
+  loading ? mensaje4.innerHTML = "Cargando..." : ""
+  setTimeout(() => {
+    let result = inmueble.filter(item => item.estaDisponible && item.precio >= 200000000 && item.precio <= 300000000)
+    loading = false  
+    mensaje4.innerHTML = ""
+    resolve(result)
+
+  }, 3000);
+})
 
 const getInmuebleById = () => {
-    const id =  document.getElementById('idInmueble').value
-    
-    const result = inmueble.filter(item => item.idinmueble === parseInt(id))
-    
-    if(result != undefined && result[0].estaDisponible){
-        console.log('Inmueble Disponible!')
-        direccion.value = result[0].direccion
-        precio.value = result[0].precio
-        telefono.value = result[0].telefono
+  const id = document.getElementById('idInmueble').value
 
-        return result
-    } else {
-        mensaje4.innerHTML = "Inmueble no Disponible"
-        console.log('Inmueble no Disponible')
-    }
+  const result = inmueble.filter(item => item.idinmueble === parseInt(id))
+
+  if (result != undefined && result[0].estaDisponible) {
+    console.log('Inmueble Disponible!')
+    direccion.value = result[0].direccion
+    precio.value = result[0].precio
+    telefono.value = result[0].telefono
+
+    return result
+  } else {
+    mensaje4.innerHTML = "Inmueble no Disponible"
+    console.log('Inmueble no Disponible')
+  }
 
 }
 
 document.getElementById('buscar').addEventListener('click', (event) => {
-    event.preventDefault()
-    getInmuebleById()
+  event.preventDefault()
+  getInmuebleById()
 })
 
 document.getElementById('listar').addEventListener('click', (event) => {
-    event.preventDefault()
+  event.preventDefault()
 
-    getInmuebles().then((result) => console.log(result))
+  getInmuebles.then((result) => console.log(result))
 })
