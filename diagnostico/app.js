@@ -111,17 +111,28 @@ const disponible = document.getElementById('disponible');
 
 let loading = false
 
-const getInmuebles = new Promise((resolve, reject) => {
-  loading = true
-  loading ? mensaje4.innerHTML = "Cargando..." : ""
-  setTimeout(() => {
-    let result = inmueble.filter(item => item.estaDisponible && item.precio >= 200000000 && item.precio <= 300000000)
-    loading = false  
-    mensaje4.innerHTML = ""
-    resolve(result)
 
-  }, 3000);
-})
+
+const promesa = () => {
+  return new Promise((resolve, reject) => {
+    loading = true
+    loading ? mensaje4.innerHTML = "Cargando..." : ""
+    let result = inmueble.filter(item => item.estaDisponible && item.precio >= 200000000 && item.precio <= 300000000)
+    setTimeout(() => {
+      loading = false
+      mensaje4.innerHTML = ""
+      resolve(result)
+    }, 1000);
+  })
+}
+
+
+const getInmuebles = () => {
+  promesa().then((inmuebles) => {
+    generateInmueblesTable(inmuebles)
+  }).catch(err => console.log(err))
+
+}
 
 const getInmuebleById = () => {
   const id = document.getElementById('idInmueble').value
@@ -142,6 +153,35 @@ const getInmuebleById = () => {
 
 }
 
+const generateInmueblesTable = (inmuebles = []) => {
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody')
+  const theadContent = Object.keys(inmuebles[0])
+  const theadRow = document.createElement('tr')
+  theadContent.map((key) => {
+    const cellHead = document.createElement('td')
+    const cellHeadContent = document.createTextNode(key)
+    cellHead.appendChild(cellHeadContent)
+    theadRow.appendChild(cellHead)
+  })
+  tbody.appendChild(theadRow)
+  inmuebles.map((inmueble) => {
+    const trContent = Object.values(inmueble);
+    const trow = document.createElement('tr');
+    trContent.map(value => {
+      const cell = document.createElement('td')
+      const cellContent = document.createTextNode(value)
+      cell.appendChild(cellContent)
+      trow.appendChild(cell)
+    })
+
+    tbody.appendChild(trow)
+  })
+
+  table.appendChild(tbody)
+  document.getElementById('table').appendChild(table)
+}
+
 document.getElementById('buscar').addEventListener('click', (event) => {
   event.preventDefault()
   getInmuebleById()
@@ -149,6 +189,34 @@ document.getElementById('buscar').addEventListener('click', (event) => {
 
 document.getElementById('listar').addEventListener('click', (event) => {
   event.preventDefault()
-
-  getInmuebles.then((result) => console.log(result))
+  getInmuebles()
 })
+
+document.getElementById('enviar').addEventListener('click',(event) => {
+  event.preventDefault(); 
+  addInmueble()
+})
+
+
+function addInmueble() {  
+  let idinmueble =document.getElementById("idinmueble").value;
+  let newDireccion =document.getElementById("direccion").value;
+  let newTelefono =document.getElementById("telefono").value;
+  let newPrecio =document.getElementById("precio").value;
+  let estaDisponible =document.getElementById("estaDisponible").checked;
+  
+  // Create new inmueble object
+  let newInmueble = {
+    idinmueble: parseInt(idinmueble),
+    direccion: newDireccion,
+    telefono: parseInt(newTelefono),
+    precio: parseInt(newPrecio),
+    estaDisponible: estaDisponible,
+  };
+  
+  // Add new inmueble to inmuebles array
+  inmuebles.push(newInmueble);
+  
+  // Display updated inmuebles array
+  console.log(inmuebles);
+}
