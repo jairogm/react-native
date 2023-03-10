@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "calculadoraBasica",
-    "slug": "calculadoraBasica",
+    "name": "cBasica",
+    "slug": "cBasica",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
